@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedAddDialogComponent } from './shared/shared-add-dialog/shared-add-dialog.component';
-import { TrelloComponent } from './components/todo-list/trello.component';
+import { TrelloComponent } from './components/trello/trello.component';
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @NgModule({
