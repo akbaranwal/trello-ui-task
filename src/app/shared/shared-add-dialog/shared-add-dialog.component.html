@@ -1,0 +1,36 @@
+<div *ngIf="!data.isUser">
+    <div mat-dialog-content>
+        <p *ngIf="!data.edit">Add Task </p>
+        <p *ngIf="data.edit">Update Task </p>
+        <form [formGroup]="todoForm">
+            <mat-form-field *ngIf="!data.edit" appearance="fill">
+                <mat-label>Add Task</mat-label>
+                <input formControlName="item" [(ngModel)]="data.description" matInput placeholder="Task Name">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="data.edit" appearance="fill">
+                <mat-label>Update Task</mat-label>
+                <input formControlName="item" [(ngModel)]="data.description" matInput placeholder="Update Task Name">
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button (click)="onSubmit()" *ngIf="!data.edit" cdkFocusInitial>Add Task</button>
+        <button mat-button (click)="onSubmit()" *ngIf="data.edit" cdkFocusInitial>Update Task</button>
+    </div>
+</div>
+
+<div *ngIf="data.isUser">
+    <div mat-dialog-content>
+        <p>Add User </p>
+        <mat-form-field appearance="fill">
+            <mat-label>Add User</mat-label>
+            <input matInput [(ngModel)]="data.name">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add user</button>
+    </div>
+</div>

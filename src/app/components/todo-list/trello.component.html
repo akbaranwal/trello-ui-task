@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <div cdkDropListGroup>
+                <div class="row">
+
+                    <div class="col-md-4" *ngFor="let item of users; let i=index">
+                        <mat-card>
+                            <mat-icon class="clear" (click)="deleteUser(i)">clear</mat-icon>
+                            <div class="example-container">
+                                <h2 class="head-title"> {{item.name}} </h2>
+
+                                <div cdkDropList [cdkDropListData]="tasks" class="example-list"
+                                    (cdkDropListDropped)="drop($event)">
+                                    <div *ngFor="let task of tasks; let i=index">
+                                        <div class="example-box" *ngIf="task.user_id == item.id" cdkDrag>
+                                            {{task.description}}
+                                            <div *ngIf="tasks.length > 0" class="box">
+                                                <button mat-icon-button color="primary" (click)="onEdit(task, task.id)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-task">
+                                    <mat-icon class="circle-outline" (click)="openAddTaskDialog(item.id)">
+                                        add_circle_outline
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #303030; height: 93vh;" class="col-md-3">
+            <div>
+                <mat-card class="mt-3">
+                    <button mat-raised-button (click)="openUserDialog()" color="primary">Add User</button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
