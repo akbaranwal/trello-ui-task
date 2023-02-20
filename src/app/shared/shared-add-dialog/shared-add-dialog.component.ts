@@ -16,15 +16,14 @@ export class SharedAddDialogComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.todoForm = this.fb.group({
-      item: ['', Validators.required]
+      item: ['', Validators.required],
+      Editeditem: ['', Validators.required]
     })
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     if(this.data.edit) {
-      this.todoForm.patchValue({
-        item: this.data.editedTask.description
-      });
+      this.todoForm.controls['item'].setValue(this.data.editedTask.description);
     }
   }
 
@@ -33,6 +32,10 @@ export class SharedAddDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if(this.data.edit) {
+      this.data.description = this.todoForm.controls['Editeditem'].value;
+      this.dialogRef.close(this.data);
+    }
     if(this.data.description.length > 0)
       this.dialogRef.close(this.data);
     else 

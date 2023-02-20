@@ -16,7 +16,7 @@
                                         <div class="example-box" *ngIf="task.user_id == item.id" cdkDrag>
                                             {{task.description}}
                                             <div *ngIf="tasks.length > 0" class="box">
-                                                <button mat-icon-button color="primary" (click)="onEdit(task, task.id)">
+                                                <button mat-icon-button color="primary" (click)="onEdit(item.id,task)">
                                                     <mat-icon>edit</mat-icon>
                                                 </button>
                                             </div>
@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                                 <div class="add-task">
-                                    <mat-icon class="circle-outline" (click)="openAddTaskDialog(item.id)">
+                                    <mat-icon class="circle-outline" (click)="openAddTaskDialog(item.id, false)">
                                         add_circle_outline
                                     </mat-icon>
                                 </div>

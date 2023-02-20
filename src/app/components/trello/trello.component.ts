@@ -30,27 +30,42 @@ export class TrelloComponent implements OnInit {
   }
 
   // Open Dialog for adding Task to specific user
-  openAddTaskDialog(unique_id: any, task ?:any, isEdit = false): void {
+  openAddTaskDialog(unique_id: any, isEdit: boolean, task ?:any): void {
     this.isUser = false;
-    const dialogRef = this.dialog.open(SharedAddDialogComponent, {
-      data: { 
-        description: this.taskDialogData, 
-        id: Math.random().toString(16).slice(2), 
-        allTask: this.tasks,
-        editedTask: task,
-        edit: isEdit,
-        isUser: this.isUser
-      }
-    });
+    if(!isEdit) {
+      var dialogRef = this.dialog.open(SharedAddDialogComponent, {
+        data: { 
+          description: this.taskDialogData, 
+          editedTask: task,
+          edit: isEdit,
+          isUser: this.isUser
+        }
+      });
 
-    dialogRef.afterClosed().subscribe((result: TaskModel) => {      
-      this.tasks.push({
-        description: result.description,
-        id: result.id,
-        user_id: unique_id
-      })
-    });
-    
+      dialogRef.afterClosed().subscribe((result: any) => {  
+        this.tasks.push({
+          description: result.description,
+          user_id: unique_id
+        })
+      });
+
+    } else {
+      var dialogRef = this.dialog.open(SharedAddDialogComponent, {
+        data: { 
+          description: this.taskDialogData, 
+          editedTask: task,
+          edit: isEdit,
+          isUser: this.isUser,
+          user_id: unique_id
+        }
+      });
+      dialogRef.afterClosed().subscribe((result: any) => { 
+        console.log(result);
+        
+        const index = this.tasks.findIndex(data=> data.id === task.id);
+        this.tasks[index]= result; 
+      });
+    }    
   }
 
 // Open Dialog for adding User 
@@ -60,7 +75,9 @@ export class TrelloComponent implements OnInit {
       data: { name: this.userDialogData, id: Math.random().toString(16).slice(2), isUser: this.isUser },
     });
 
-    dialogRef.afterClosed().subscribe((result: User) => {      
+    dialogRef.afterClosed().subscribe((result: User) => { 
+      console.log(result);
+           
       if (result != undefined && result) {
         this.users.push({
           name: result.name,
@@ -70,10 +87,10 @@ export class TrelloComponent implements OnInit {
     });
   }
 
-  // Edit the task (inprogress)
-  onEdit(item: any, i: any): void {    
+  // Edit the task 
+  onEdit(unique_id: any, item: any): void {        
     this.isEditEnabled = true;
-    this.openAddTaskDialog(i, item, this.isEditEnabled)
+    this.openAddTaskDialog( unique_id, this.isEditEnabled, item)
   }
 
   // Confirm and Delete User
